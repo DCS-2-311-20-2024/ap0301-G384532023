@@ -23,6 +23,7 @@ function init() {
   // 座標軸の設定
   const axes = new THREE.AxesHelper(18);
   scene.add(axes);
+  axes.visible = false;
 
   // ロボットの作成
   const robots = new THREE.Group();
