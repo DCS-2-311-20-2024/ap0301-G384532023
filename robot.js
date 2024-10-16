@@ -36,7 +36,7 @@ export function makeMetalRobot() {
   legL.position.set(legSep/2, legLen/2, 0);
   metalRobot.add(legL);
   //  胴体の作成
-  const bodyGeometry = new THREE. BoxGeometry (bodyW - bodyD, bodyH, bodyD);
+  const bodyGeometry = new THREE.BoxGeometry(bodyW - bodyD, bodyH, bodyD);
   const body = new THREE.Group;
   body.add(new THREE.Mesh(bodyGeometry, metalMaterial));
   const bodyL = new THREE.Mesh(
@@ -49,25 +49,25 @@ export function makeMetalRobot() {
     new THREE.CylinderGeometry(
       bodyD/2, bodyD/2, bodyH, seg, 1, false, Math.PI, Math.PI),
     metalMaterial);
-  bodyR.position.x = - (bodyW - bodyD)/2;
+  bodyR.position.x = -(bodyW - bodyD)/2;
   body.add(bodyR);
   const triangleGeometry = new THREE.BufferGeometry();
-  const triangleVertices = new Float32Array ( [
-    0,0, bodyD/2+gap,
+  const triangleVertices = new Float32Array( [
+    0, 0, bodyD/2+gap,
     (bodyW - bodyD)/2, bodyH/2, bodyD/2+gap,
     -(bodyW - bodyD)/2, bodyH/2, bodyD/2+gap] );
-    triangleGeometry.setAttribute( 'position',
-      new THREE.BufferAttribute( triangleVertices, 3));
-      body.add(new THREE.Mesh(triangleGeometry, redMaterial));
-    body.children.forEach((child) => {
-      child.castShadow = true;
-      child.receiveShadow = true;
-    });
-  body.position.y = legLen + bodyH/2
+  triangleGeometry.setAttribute( 'position',
+    new THREE.BufferAttribute( triangleVertices, 3));
+  body.add(new THREE.Mesh(triangleGeometry, redMaterial));
+  body.position.y = legLen + bodyH/2;
+  body.children.forEach((child) => {
+    child.castShadow = true;
+    child.receiveShadow = true;
+  });
   metalRobot.add(body);
   //  腕の作成
   const armGeometry
-  = new THREE.CylinderGeometry (armRad, armRad, armLen, seg, 1);
+    = new THREE.CylinderGeometry(armRad, armRad, armLen, seg, 1);
   const armL = new THREE.Mesh(armGeometry, metalMaterial);
   armL.position.set(bodyW/2 + armRad, legLen + bodyH - armLen/2, 0);
   metalRobot.add(armL);
@@ -76,20 +76,20 @@ export function makeMetalRobot() {
   metalRobot.add(armR);
   //  頭の作成
   const head = new THREE.Group;
-  const headGeometry = new THREE.SphereGeometry (headRad, seg, seg);
-  head.add(new THREE. Mesh (headGeometry, metalMaterial));
-  const circleGeometry = new THREE.CircleGeometry (eyeRad, seg);
-  const eyeL = new THREE. Mesh(circleGeometry, redMaterial);
+  const headGeometry = new THREE.SphereGeometry(headRad, seg, seg);
+  head.add(new THREE.Mesh(headGeometry, metalMaterial));
+  const circleGeometry = new THREE.CircleGeometry(eyeRad, seg);
+  const eyeL = new THREE.Mesh(circleGeometry, redMaterial);
   eyeL.position.set(eyeSep/2, headRad/3, headRad-0.04);
   head.add(eyeL);
   const eyeR = new THREE.Mesh(circleGeometry, redMaterial);
   eyeR.position.set(-eyeSep/2, headRad/3, headRad-0.04);
   head.add(eyeR);
+  head.position.y = legLen + bodyH + headRad;
   head.children.forEach((child) => {
     child.castShadow = true;
     child.receiveShadow = true;
   });
-  head.position.y = legLen + bodyH + headRad;
   metalRobot.add(head);
   // 影についての設定
   metalRobot.children.forEach((child) => {
